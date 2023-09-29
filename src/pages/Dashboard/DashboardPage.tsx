@@ -1,13 +1,17 @@
 import { Page } from "../../components/Layout/Page";
 import { TaskBox } from "../../components/TaskLine/TaskProgressBox";
+import { useAppDispatch } from "../../store";
+import { createTask } from "../../store/dashboard/dashboard";
+import { ModalForm } from "./ModalForm";
 
 const DashboardPage = () => {
+  const dispatch = useAppDispatch();
   return (
     <Page>
       <TaskBox
         title="TO DO"
         onCreate={() => {
-          console.log('create');
+          dispatch(createTask());
         }}
       />
       <TaskBox
@@ -16,6 +20,7 @@ const DashboardPage = () => {
       <TaskBox
         title="Done"
       />
+      <ModalForm />
     </Page >
   );
 }

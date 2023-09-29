@@ -29,11 +29,16 @@ export const dashboardSlice = createSlice({
     onClose: (state) => {
       state.activeTask = undefined;
     },
+    onSave: (state, action: PayloadAction<Task>) => {
+      state.taskList = [...state.taskList, action.payload];
+      state.activeTask = undefined;
+    },
   },
   extraReducers: (builder) => {},
 });
 
-export const { taskChange, createTask, onClose } = dashboardSlice.actions;
+export const { taskChange, createTask, onClose, onSave } =
+  dashboardSlice.actions;
 
 export const selectDashboardState = (state: RootState) => state.dashboard;
 
