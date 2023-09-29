@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Task } from "../../interface/Task";
+import { Task, TaskStatus } from "../../interface/Task";
 import { RootState } from "..";
 
 interface DashboardState {
@@ -30,15 +30,52 @@ export const dashboardSlice = createSlice({
       state.activeTask = undefined;
     },
     onSave: (state, action: PayloadAction<Task>) => {
-      state.taskList = [...state.taskList, action.payload];
-      state.activeTask = undefined;
+      if (
+        state.taskList.filter((item) => item.id === action.payload.id)
+          .length === 0
+      ) {
+        state.taskList = [...state.taskList, action.payload];
+        state.activeTask = undefined;
+      }
+
+      if (
+        state.taskList.filter((item) => item.id === action.payload.id)
+          .length === 1
+      ) {
+        const index = state.taskList.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          const newArr = [...state.taskList];
+          newArr[index] = action.payload;
+          
+          state.taskList = newArr;
+          state.activeTask = undefined;
+        }
+      }
+    },
+    descriptionHandler: (state, action: PayloadAction<string>) => {
+      if (state.activeTask) state.activeTask.description = action.payload;
+    },
+    dateHandler: (state, action: PayloadAction<string>) => {
+      if (state.activeTask) state.activeTask.date = action.payload;
+    },
+    statusHandler: (state, action: PayloadAction<TaskStatus>) => {
+      if (state.activeTask) state.activeTask.status = action.payload;
     },
   },
   extraReducers: (builder) => {},
 });
 
-export const { taskChange, createTask, onClose, onSave } =
-  dashboardSlice.actions;
+export const {
+  taskChange,
+  createTask,
+  onClose,
+  onSave,
+  descriptionHandler,
+  dateHandler,
+  statusHandler,
+} = dashboardSlice.actions;
 
 export const selectDashboardState = (state: RootState) => state.dashboard;
 

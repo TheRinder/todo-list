@@ -2,13 +2,12 @@ import { Button, Modal } from "antd"
 import { useAppDispatch, useAppSelector } from "../../store";
 import { onClose, onSave, selectDashboardState } from "../../store/dashboard/dashboard";
 import React from "react";
-import { Task } from "../../interface/Task";
+import { TaskForm } from "../../components/Forms/TaskForm";
 
 export const ModalForm = () => {
   const { activeTask } = useAppSelector(selectDashboardState);
   const dispatch = useAppDispatch();
-
-  const [initialData, setInitialData] = React.useState<Task | undefined>()
+  const [error, setError] = React.useState<string | undefined>();
 
   const isOpenModal: boolean = React.useMemo(() => {
     if (!!activeTask) {
@@ -18,8 +17,12 @@ export const ModalForm = () => {
   }, [activeTask])
 
   const handleOk = () => {
-    if (initialData) {
-      dispatch(onSave(initialData));
+    if (activeTask && activeTask.description.length !== 0) {
+      setError(undefined);
+      dispatch(onSave(activeTask));
+    }
+    if (activeTask && activeTask.description.length === 0) {
+      setError('Error! Description requred');
     }
   };
 
@@ -39,7 +42,13 @@ export const ModalForm = () => {
           Save
         </Button>,
       ]}
-    >
+    >{
+        activeTask
+        && <TaskForm
+          data={activeTask}
+          warning={error}
+        />
+      }
 
     </Modal>
   )
