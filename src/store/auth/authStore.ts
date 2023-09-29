@@ -18,13 +18,17 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setFaikToken: (state, action: PayloadAction<string>) => {
-      state.token = "fake_token";
+      state.token = action.payload;
+    },
+    logout: (state) => {
+      state.token = null;
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {},
 });
 
-export const { setFaikToken } = authSlice.actions;
+export const { setFaikToken, logout } = authSlice.actions;
 
 export const selectAuthState = (state: RootState) => state.auth;
 
