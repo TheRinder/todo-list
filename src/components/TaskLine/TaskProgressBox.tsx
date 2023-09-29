@@ -28,7 +28,7 @@ export const TaskBox = (props: TaskBoxProps) => {
           )
         }
       </Row>
-      <Space>
+      <Space style={{ overflow: 'auto', maxWidth: '100%' }}>
         <Card title="Default size card" extra={<Button>Edit</Button>} style={{ width: 300 }}>
           <p>Description:</p>
           <p>Text description</p>
