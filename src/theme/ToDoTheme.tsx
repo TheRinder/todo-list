@@ -3,13 +3,13 @@ import { ConfigProvider, theme } from "antd"
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ConfigProvider theme={{
-      algorithm: theme.darkAlgorithm,
       token: {
 
       },
       components: {
         Layout: {
-          bodyBg: ' rgb(18, 0, 39)'
+          footerBg: 'rgba(0, 0, 0, 0.2)',
+          headerBg: 'rgba(0, 0, 0, 0.2)',
         },
       }
     }}

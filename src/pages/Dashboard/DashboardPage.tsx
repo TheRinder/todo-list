@@ -1,13 +1,22 @@
-import { Typography } from "antd";
 import { Page } from "../../components/Layout/Page";
+import { TaskBox } from "../../components/TaskLine/TaskProgressBox";
 
 const DashboardPage = () => {
   return (
     <Page>
-      <Typography.Text>
-        Shis
-      </Typography.Text>
-    </Page>
+      <TaskBox
+        title="TO DO"
+        onCreate={() => {
+          console.log('create');
+        }}
+      />
+      <TaskBox
+        title="In Progress"
+      />
+      <TaskBox
+        title="Done"
+      />
+    </Page >
   );
 }
 

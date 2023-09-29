@@ -11,6 +11,7 @@ export const Page = ({ children }: { children: React.ReactNode }) => {
       <Header>
         <Button
           type="primary"
+          className="btnLogout"
           ghost
           onClick={() => {
             dispatch(logout());
